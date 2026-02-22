@@ -7,20 +7,6 @@ let quizState = {
     usedQuestions: [] 
 };
 
-const mentors = [
-    { name: "Alex Rivera", spec: "Full Stack Expert", emoji: "👨‍🚀", price: "$45" },
-    { name: "Sarah Chen", spec: "AI & Neural Nets", emoji: "👩‍💻", price: "$60" },
-    { name: "Marcus Vane", spec: "Cybersecurity", emoji: "🕵️‍♂️", price: "$55" },
-    { name: "Elena Ross", spec: "UI/UX Architect", emoji: "🦄", price: "$40" },
-    { name: "D-01 Bot", spec: "Logic Engine", emoji: "🤖", price: "Free" }
-];
-
-const leaders = [
-    { name: "SARAH TECH", streak: "45", xp: "12,400" },
-    { name: "CODEKING", streak: "22", xp: "11,200" },
-    { name: "DEVMASTER", streak: "18", xp: "9,800" }
-];
-
 // --- 2. THREE.JS STARFIELD ---
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -34,7 +20,7 @@ scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({color: 0xffffff, s
 camera.position.z = 1;
 function animate() { requestAnimationFrame(animate); renderer.render(scene, camera); } animate();
 
-// --- 3. LIFECYCLE ---
+// --- 3. LIFECYCLE & NAVIGATION ---
 window.onload = () => {
     const tl = gsap.timeline();
     tl.to(".intro-lx", { opacity: 1, scale: 1, duration: 1.5, ease: "expo.out" });
@@ -47,13 +33,12 @@ window.onload = () => {
     }});
 };
 
-// --- 4. NAVIGATION ---
 function closeOverlays() {
     document.querySelectorAll('.overlay').forEach(o => { o.style.display = 'none'; o.style.opacity = '0'; });
 }
+function triggerPractice() { closeOverlays(); showOverlay('practice-overlay'); fetchQuizQuestion(); }
 function openMentors() { closeOverlays(); showOverlay('mentor-overlay'); }
 function openLeaderboard() { closeOverlays(); showOverlay('leaderboard-overlay'); }
-function triggerPractice() { closeOverlays(); showOverlay('practice-overlay'); fetchQuizQuestion(); }
 function openProfile(n, s, x) {
     closeOverlays();
     document.getElementById('prof-name').innerHTML = `IDENTITY: <span class="text-blue-500">${n}</span>`;
@@ -67,14 +52,13 @@ function showOverlay(id) {
     if(el) { el.style.display = 'block'; gsap.to(el, { opacity: 1, duration: 0.5 }); }
 }
 
-// --- 5. LEVEL OVERRIDE ---
 function manualLevelChange(val) {
     quizState.currentLevel = parseInt(val);
     quizState.correctInARow = 0;
     fetchQuizQuestion();
 }
 
-// --- 6. AI QUIZ LOGIC ---
+// --- 4. AI QUIZ LOGIC (With Strict Prompting) ---
 async function fetchQuizQuestion() {
     const root = document.getElementById('quiz-root');
     root.innerHTML = `<div class="text-center py-20 text-blue-500 font-black italic animate-pulse tracking-widest">Neural Link: Level ${quizState.currentLevel}...</div>`;
@@ -88,11 +72,24 @@ async function fetchQuizQuestion() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
                 topic: "C++ Programming", 
-                difficulty: `Level ${quizState.currentLevel}`, 
-                exclude: quizState.usedQuestions 
+                difficulty: `Level ${quizState.currentLevel}`,
+                // Updated Prompt to prevent 'No Code' output questions
+                prompt: `Generate a multiple choice question on C++ for difficulty Level ${quizState.currentLevel}. 
+                        STRICT RULES:
+                        1. If the question asks "What is the output", you MUST include a code block in the question field.
+                        2. If no code is provided, focus on conceptual or syntax questions.
+                        3. Provide exactly 4 options and the correct answer.
+                        4. Return data strictly in JSON format.`
             })
         });
         const data = await res.json();
+
+        // Safety Filter: Agar "output" pucha hai par code gayab hai, toh naya mangwao
+        if (data.question.toLowerCase().includes("output") && !data.question.includes("```") && !data.question.includes("{")) {
+            console.warn("Invalid question detected, re-fetching...");
+            return fetchQuizQuestion();
+        }
+
         renderQuiz(data);
     } catch (e) {
         root.innerHTML = `<div class="text-red-500 font-black uppercase text-center">Backend Offline! Check server.js</div>`;
@@ -100,6 +97,9 @@ async function fetchQuizQuestion() {
 }
 
 function renderQuiz(q) {
+    // Code block ko highlight karne ke liye format
+    let formattedQuestion = q.question.replace(/```([\s\S]*?)```/g, '<pre class="bg-black/50 p-4 rounded-xl my-4 font-mono text-blue-300 text-sm">$1</pre>');
+
     document.getElementById('quiz-root').innerHTML = `
         <div class="bg-white/5 border border-white/10 p-10 rounded-[3rem]">
             <div class="flex justify-between items-center mb-8 text-[10px] font-black italic uppercase">
@@ -110,7 +110,7 @@ function renderQuiz(q) {
                 </div>
                 <span class="text-blue-500">🏆 XP: ${quizState.xp}</span>
             </div>
-            <h3 class="text-2xl font-bold mb-10">${q.question}</h3>
+            <h3 class="text-xl font-bold mb-10 leading-relaxed">${formattedQuestion}</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 ${q.options.map(o => `
                     <button class="q-opt border border-white/10 p-5 rounded-2xl text-left hover:bg-blue-500/10 transition font-bold" 
@@ -130,8 +130,6 @@ function checkAnswer(btn, sel, ans, exp) {
     if(isCorrect) {
         btn.style.background = "rgba(22, 163, 74, 0.4)";
         quizState.xp += 20; quizState.streak++; quizState.correctInARow++;
-        
-        // AUTO LEVEL UP LOGIC
         if(quizState.correctInARow >= 5 && quizState.currentLevel < 5) {
             quizState.currentLevel++;
             quizState.correctInARow = 0;
@@ -148,21 +146,22 @@ function checkAnswer(btn, sel, ans, exp) {
     document.getElementById('q-next').classList.remove('hidden');
 }
 
-// --- 7. DATA RENDERING ---
+// --- 5. DATA FILLERS & 3D ---
 function initMentors() {
     const grid = document.getElementById('mentor-grid'); if(!grid) return;
-    grid.innerHTML = mentors.map(m => `<div class="bg-[#0b1120] border border-white/5 text-center p-8 rounded-[2.5rem] hover:border-blue-500 transition-all"><div class="text-4xl mb-4">${m.emoji}</div><h4 class="font-black text-[11px] uppercase italic text-white">${m.name}</h4><p class="text-[8px] text-blue-500 font-black uppercase tracking-[2px] mt-1 mb-6">${m.spec}</p><div class="flex flex-col gap-2"><button class="bg-blue-600/10 text-blue-400 text-[9px] font-black py-2 rounded-xl">Free Chat</button><button class="bg-white/5 text-white/50 text-[9px] font-black py-2 rounded-xl">Paid: ${m.price}/hr</button></div></div>`).join('');
+    const mData = [ { name: "Alex Rivera", spec: "Full Stack Expert", emoji: "👨‍🚀", price: "$45" }, { name: "Sarah Chen", spec: "AI & Neural Nets", emoji: "👩‍💻", price: "$60" }, { name: "Marcus Vane", spec: "Cybersecurity", emoji: "🕵️‍♂️", price: "$55" }, { name: "Elena Ross", spec: "UI/UX Architect", emoji: "🦄", price: "$40" }, { name: "D-01 Bot", spec: "Logic Engine", emoji: "🤖", price: "Free" } ];
+    grid.innerHTML = mData.map(m => `<div class="bg-[#0b1120] border border-white/5 text-center p-8 rounded-[2.5rem] hover:border-blue-500 transition-all"><div class="text-4xl mb-4">${m.emoji}</div><h4 class="font-black text-[11px] uppercase italic text-white">${m.name}</h4><p class="text-[8px] text-blue-500 font-black uppercase tracking-[2px] mt-1 mb-6">${m.spec}</p><div class="flex flex-col gap-2"><button class="bg-blue-600/10 text-blue-400 text-[9px] font-black py-2 rounded-xl">Free Chat</button><button class="bg-white/5 text-white/50 text-[9px] font-black py-2 rounded-xl">Paid: ${m.price}/hr</button></div></div>`).join('');
 }
 function initLeaderboard() {
     const list = document.getElementById('leader-list'); if(!list) return;
-    list.innerHTML = leaders.map(l => `<div class="bg-[#0b1120] border border-white/5 flex justify-between items-center p-6 rounded-[2rem] hover:border-blue-500/50 transition-all"><span class="font-black italic text-sm uppercase text-white">${l.name}</span><div class="flex items-center gap-6"><span class="text-orange-500 text-xs font-bold">🔥 ${l.streak}</span><span class="text-blue-500 font-black text-xs uppercase italic">${l.xp} XP</span></div></div>`).join('');
+    const lData = [ { name: "SARAH TECH", streak: "45", xp: "12,400" }, { name: "CODEKING", streak: "22", xp: "11,200" }, { name: "DEVMASTER", streak: "18", xp: "9,800" } ];
+    list.innerHTML = lData.map(l => `<div class="bg-[#0b1120] border border-white/5 flex justify-between items-center p-6 rounded-[2rem] hover:border-blue-500/50 transition-all"><span class="font-black italic text-sm uppercase text-white">${l.name}</span><div class="flex items-center gap-6"><span class="text-orange-500 text-xs font-bold">🔥 ${l.streak}</span><span class="text-blue-500 font-black text-xs uppercase italic">${l.xp} XP</span></div></div>`).join('');
 }
 function initBadge3D() {
     const canv = document.getElementById('badge-canvas'); if(!canv) return;
-    const bRenderer = new THREE.WebGLRenderer({ canvas: canv, antialias: true, alpha: true });
-    bRenderer.setSize(300, 300); const bScene = new THREE.Scene();
-    const bMesh = new THREE.Mesh(new THREE.OctahedronGeometry(1.5, 0), new THREE.MeshPhongMaterial({ color: 0x3b82f6, shininess: 100 }));
-    bScene.add(bMesh); const light = new THREE.PointLight(0xffffff, 1.5); light.position.set(5,5,5); bScene.add(light, new THREE.AmbientLight(0x404040));
+    const bRenderer = new THREE.WebGLRenderer({ canvas: canv, antialias: true, alpha: true }); bRenderer.setSize(300, 300); const bScene = new THREE.Scene();
+    const bMesh = new THREE.Mesh(new THREE.OctahedronGeometry(1.5, 0), new THREE.MeshPhongMaterial({ color: 0x3b82f6, shininess: 100 })); bScene.add(bMesh);
+    const light = new THREE.PointLight(0xffffff, 1.5); light.position.set(5,5,5); bScene.add(light, new THREE.AmbientLight(0x404040));
     const bCam = new THREE.PerspectiveCamera(45, 1, 0.1, 100); bCam.position.z = 5;
     function an() { requestAnimationFrame(an); bMesh.rotation.y += 0.02; bRenderer.render(bScene, bCam); } an();
 }
