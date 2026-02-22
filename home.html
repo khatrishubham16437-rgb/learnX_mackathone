@@ -21,7 +21,7 @@
     </div>
 
     <aside id="sidebar" class="sidebar fixed left-0 top-0 h-screen w-[85px] bg-[#0b1120]/95 border-r border-white/10 z-[1000] flex flex-col items-center py-8 translate-x-[-100%]">
-        <div onclick="openProfile('User', '14', '24,500')" class="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl cursor-pointer flex items-center justify-center font-black mb-10 shadow-[0_0_20px_rgba(59,130,246,0.3)]">JD</div>
+        <div onclick="openProfile('Shubham', '14', '24,500')" class="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl cursor-pointer flex items-center justify-center font-black mb-10 shadow-[0_0_20px_rgba(59,130,246,0.3)]">SK</div>
         <nav class="flex flex-col gap-10 items-center">
             <div class="nav-icon cursor-pointer group flex flex-col items-center gap-1" onclick="closeOverlays()">
                 <i data-lucide="home" class="text-gray-500 group-hover:text-blue-500 transition"></i>
@@ -43,73 +43,39 @@
     </aside>
 
     <main id="main-content" class="pl-[85px]">
-        <section id="hero" class="h-screen flex items-center px-12 lg:px-24">
-            <div class="grid lg:grid-cols-2 w-full items-center">
-                <div class="hero-text">
-                    <h1 class="text-[120px] font-black italic tracking-tighter leading-none text-blue-600">LEARNX</h1>
-                    <p class="text-gray-400 max-w-sm text-lg border-l-2 border-blue-500 pl-4 mt-6 font-bold uppercase tracking-tight">Neural-link your logic to world-class mentors and 3D animated challenges.</p>
-                </div>
-                <div class="hidden lg:flex justify-center relative">
-                    <div class="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full"></div>
-                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" class="w-[400px] z-10 animate-[bounce_4s_infinite]">
-                </div>
+        <section class="h-screen flex items-center px-12 lg:px-24">
+            <div>
+                <h1 class="text-[120px] font-black italic tracking-tighter leading-none text-blue-600">LEARNX</h1>
+                <p class="text-gray-400 max-w-sm text-lg border-l-2 border-blue-500 pl-4 mt-6 font-bold uppercase tracking-tight">Neural-link your logic to world-class mentors and AI challenges.</p>
             </div>
         </section>
     </main>
 
-    <div id="profile-overlay" class="overlay fixed inset-0 z-[2000] bg-[#050810]/98 backdrop-blur-3xl hidden p-12">
-        <div class="max-w-5xl mx-auto pt-10">
-            <div class="flex justify-between items-center mb-10">
-                <h2 id="prof-name" class="text-4xl font-black italic uppercase">Identity: <span class="text-blue-500">User</span></h2>
-                <button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full hover:bg-white/20"><i data-lucide="x"></i></button>
-            </div>
-            <div class="grid md:grid-cols-2 gap-10">
-                <div class="bg-white/5 border border-white/10 rounded-[3rem] h-[400px] flex items-center justify-center">
-                    <canvas id="badge-canvas" class="w-[300px] h-[300px]"></canvas>
-                </div>
-                <div class="space-y-6">
-                    <div class="bg-white/5 border-2 border-orange-500/50 shadow-[0_0_40px_rgba(249,115,22,0.1)] flex justify-between items-center px-10 py-12 rounded-[2.5rem]">
-                        <span class="text-gray-400 font-black uppercase text-sm">Streak</span>
-                        <span id="prof-streak" class="text-6xl font-black text-orange-500">🔥 14</span>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 flex justify-between items-center px-10 py-12 rounded-[2.5rem]">
-                        <span class="text-gray-400 font-black uppercase text-sm">XP</span>
-                        <span id="prof-xp" class="text-6xl font-black text-blue-500 italic">24,500</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="mentor-overlay" class="overlay fixed inset-0 z-[2000] bg-[#050810]/98 backdrop-blur-3xl hidden p-12">
-        <div class="max-w-6xl mx-auto pt-10">
-            <div class="flex justify-between items-center mb-10">
-                <h2 class="text-4xl font-black italic uppercase">The Architects</h2>
-                <button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full"><i data-lucide="x"></i></button>
-            </div>
-            <div id="mentor-grid" class="grid md:grid-cols-3 lg:grid-cols-5 gap-6"></div>
-        </div>
-    </div>
-
-    <div id="leaderboard-overlay" class="overlay fixed inset-0 z-[2000] bg-[#050810]/98 backdrop-blur-3xl hidden p-12">
-        <div class="max-w-3xl mx-auto pt-10">
-            <div class="flex justify-between items-center mb-10">
-                <h2 class="text-4xl font-black italic uppercase">Global Ranks</h2>
-                <button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full"><i data-lucide="x"></i></button>
-            </div>
-            <div id="leader-list" class="space-y-4"></div>
-        </div>
-    </div>
-
     <div id="practice-overlay" class="overlay fixed inset-0 z-[2000] bg-[#050810]/98 backdrop-blur-3xl hidden p-12 overflow-y-auto">
         <div class="max-w-4xl mx-auto">
-            <div class="flex justify-between items-center mb-10">
+            <div class="flex justify-between items-center mb-6">
                 <h2 class="text-4xl font-black italic uppercase">Neural <span class="text-blue-500">Practice</span></h2>
-                <button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full"><i data-lucide="x"></i></button>
+                <button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full hover:bg-white/20"><i data-lucide="x"></i></button>
             </div>
+            
+            <div class="flex items-center gap-4 mb-10 bg-white/5 p-4 rounded-2xl border border-white/10 w-fit">
+                <label class="text-[10px] font-black uppercase text-gray-500 italic tracking-widest">Manual Override:</label>
+                <select id="level-selector" onchange="manualLevelChange(this.value)" class="bg-black border border-blue-500/50 text-blue-500 font-black text-xs rounded-lg px-4 py-2 outline-none cursor-pointer">
+                    <option value="1">Level 1 (Beginner)</option>
+                    <option value="2">Level 2 (Intermediate)</option>
+                    <option value="3">Level 3 (Advanced)</option>
+                    <option value="4">Level 4 (Expert)</option>
+                    <option value="5">Level 5 (Master)</option>
+                </select>
+            </div>
+
             <div id="quiz-root"></div>
         </div>
     </div>
+
+    <div id="mentor-overlay" class="overlay fixed inset-0 z-[2000] bg-[#050810]/98 backdrop-blur-3xl hidden p-12"><div class="max-w-6xl mx-auto"><div class="flex justify-between items-center mb-10"><h2 class="text-4xl font-black italic uppercase">The Architects</h2><button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full"><i data-lucide="x"></i></button></div><div id="mentor-grid" class="grid md:grid-cols-3 lg:grid-cols-5 gap-6"></div></div></div>
+    <div id="leaderboard-overlay" class="overlay fixed inset-0 z-[2000] bg-[#050810]/98 backdrop-blur-3xl hidden p-12"><div class="max-w-3xl mx-auto"><div class="flex justify-between items-center mb-10"><h2 class="text-4xl font-black italic uppercase">Global Ranks</h2><button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full"><i data-lucide="x"></i></button></div><div id="leader-list" class="space-y-4"></div></div></div>
+    <div id="profile-overlay" class="overlay fixed inset-0 z-[2000] bg-[#050810]/98 backdrop-blur-3xl hidden p-12"><div class="max-w-5xl mx-auto"><div class="flex justify-between items-center mb-10"><h2 id="prof-name" class="text-4xl font-black italic uppercase italic">IDENTITY</h2><button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full"><i data-lucide="x"></i></button></div><div class="grid md:grid-cols-2 gap-10"><div class="bg-white/5 border border-white/10 rounded-[3rem] h-[400px] flex items-center justify-center"><canvas id="badge-canvas" class="w-[300px] h-[300px]"></canvas></div><div class="space-y-6"><div class="bg-white/5 border-2 border-orange-500/50 flex justify-between items-center px-10 py-12 rounded-[2.5rem]"><span class="text-gray-400 font-black uppercase text-sm">Streak</span><span id="prof-streak" class="text-6xl font-black text-orange-500">🔥 14</span></div><div class="bg-white/5 border border-white/10 flex justify-between items-center px-10 py-12 rounded-[2.5rem]"><span class="text-gray-400 font-black uppercase text-sm">XP</span><span id="prof-xp" class="text-6xl font-black text-blue-500">24,500</span></div></div></div></div></div>
 
     <script src="script.js"></script>
 </body>
