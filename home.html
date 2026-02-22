@@ -12,54 +12,104 @@
 </head>
 <body class="bg-[#050810] text-white overflow-x-hidden">
 
-    <div id="intro-overlay">
-        <canvas id="starfield"></canvas>
-        <div class="relative z-50 flex flex-col items-center justify-center">
-            <div class="intro-lx text-blue-600 font-black">LX</div>
-            <p id="welcome-msg" class="opacity-0">WELCOME TO CODING WORLD</p>
+    <div id="intro-overlay" class="fixed inset-0 z-[9999] bg-black flex items-center justify-center">
+        <canvas id="starfield" class="absolute inset-0"></canvas>
+        <div class="relative z-50 flex flex-col items-center">
+            <div class="intro-lx text-blue-600 font-black text-9xl">LX</div>
+            <p id="welcome-msg" class="opacity-0 tracking-[8px] uppercase mt-4 text-xs font-bold">Welcome to Coding World</p>
         </div>
     </div>
 
-    <aside id="sidebar" class="sidebar">
-        <div onclick="openProfile('User', '0', '0')" id="user-avatar" class="profile-trigger mb-10 uppercase text-xs font-black">UN</div>
+    <aside id="sidebar" class="sidebar fixed left-0 top-0 h-screen w-[85px] bg-[#0b1120]/95 border-r border-white/10 z-[1000] flex flex-col items-center py-8 translate-x-[-100%]">
+        <div onclick="openProfile('User', '14', '24,500')" class="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl cursor-pointer flex items-center justify-center font-black mb-10 shadow-[0_0_20px_rgba(59,130,246,0.3)]">JD</div>
         <nav class="flex flex-col gap-10 items-center">
-            <div class="nav-icon active" onclick="closeOverlays()"><i data-lucide="home"></i><span class="nav-label">Home</span></div>
-            <div class="nav-icon" onclick="triggerPractice()"><i data-lucide="code-2"></i><span class="nav-label">Practice</span></div>
-            <div class="nav-icon" onclick="openMentors()"><i data-lucide="users-round"></i><span class="nav-label">Mentors</span></div>
-            <div class="nav-icon" onclick="openLeaderboard()"><i data-lucide="trophy"></i><span class="nav-label">Ranks</span></div>
+            <div class="nav-icon cursor-pointer group flex flex-col items-center gap-1" onclick="closeOverlays()">
+                <i data-lucide="home" class="text-gray-500 group-hover:text-blue-500 transition"></i>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Home</span>
+            </div>
+            <div class="nav-icon cursor-pointer group flex flex-col items-center gap-1" onclick="triggerPractice()">
+                <i data-lucide="code-2" class="text-gray-500 group-hover:text-blue-500 transition"></i>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Practice</span>
+            </div>
+            <div class="nav-icon cursor-pointer group flex flex-col items-center gap-1" onclick="openMentors()">
+                <i data-lucide="users-round" class="text-gray-500 group-hover:text-blue-500 transition"></i>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Mentors</span>
+            </div>
+            <div class="nav-icon cursor-pointer group flex flex-col items-center gap-1" onclick="openLeaderboard()">
+                <i data-lucide="trophy" class="text-gray-500 group-hover:text-blue-500 transition"></i>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Ranks</span>
+            </div>
         </nav>
     </aside>
 
-    <main id="main-content">
+    <main id="main-content" class="pl-[85px]">
         <section id="hero" class="h-screen flex items-center px-12 lg:px-24">
             <div class="grid lg:grid-cols-2 w-full items-center">
                 <div class="hero-text">
                     <h1 class="text-[120px] font-black italic tracking-tighter leading-none text-blue-600">LEARNX</h1>
-                    <p class="text-gray-400 max-w-sm text-lg border-l-2 border-blue-500 pl-4 mt-6">Neural-link your logic to world-class mentors and AI-powered challenges.</p>
+                    <p class="text-gray-400 max-w-sm text-lg border-l-2 border-blue-500 pl-4 mt-6 font-bold uppercase tracking-tight">Neural-link your logic to world-class mentors and 3D animated challenges.</p>
                 </div>
                 <div class="hidden lg:flex justify-center relative">
-                    <div class="robot-glow"></div>
-                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" class="robot-float w-[400px] z-10">
+                    <div class="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full"></div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" class="w-[400px] z-10 animate-[bounce_4s_infinite]">
                 </div>
             </div>
         </section>
-        </main>
+    </main>
 
-    <div id="practice-overlay" class="overlay">
-        <div class="max-w-4xl mx-auto pt-10">
+    <div id="profile-overlay" class="overlay fixed inset-0 z-[2000] bg-[#050810]/98 backdrop-blur-3xl hidden p-12">
+        <div class="max-w-5xl mx-auto pt-10">
             <div class="flex justify-between items-center mb-10">
-                <h2 class="text-4xl font-black italic uppercase italic tracking-widest">Neural <span class="text-blue-500">Practice</span></h2>
-                <button onclick="closeOverlays()" class="close-btn p-2 bg-white/10 rounded-full"><i data-lucide="x"></i></button>
+                <h2 id="prof-name" class="text-4xl font-black italic uppercase">Identity: <span class="text-blue-500">User</span></h2>
+                <button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full hover:bg-white/20"><i data-lucide="x"></i></button>
             </div>
-            <div id="quiz-root" class="w-full"></div>
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="bg-white/5 border border-white/10 rounded-[3rem] h-[400px] flex items-center justify-center">
+                    <canvas id="badge-canvas" class="w-[300px] h-[300px]"></canvas>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-white/5 border-2 border-orange-500/50 shadow-[0_0_40px_rgba(249,115,22,0.1)] flex justify-between items-center px-10 py-12 rounded-[2.5rem]">
+                        <span class="text-gray-400 font-black uppercase text-sm">Streak</span>
+                        <span id="prof-streak" class="text-6xl font-black text-orange-500">🔥 14</span>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 flex justify-between items-center px-10 py-12 rounded-[2.5rem]">
+                        <span class="text-gray-400 font-black uppercase text-sm">XP</span>
+                        <span id="prof-xp" class="text-6xl font-black text-blue-500 italic">24,500</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="profile-overlay" class="overlay">...</div>
-    <div id="mentor-overlay" class="overlay">...</div>
-    <div id="leaderboard-overlay" class="overlay">...</div>
+    <div id="mentor-overlay" class="overlay fixed inset-0 z-[2000] bg-[#050810]/98 backdrop-blur-3xl hidden p-12">
+        <div class="max-w-6xl mx-auto pt-10">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-4xl font-black italic uppercase">The Architects</h2>
+                <button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full"><i data-lucide="x"></i></button>
+            </div>
+            <div id="mentor-grid" class="grid md:grid-cols-3 lg:grid-cols-5 gap-6"></div>
+        </div>
+    </div>
 
-    <div id="chat-window" class="chat-container">...</div>
+    <div id="leaderboard-overlay" class="overlay fixed inset-0 z-[2000] bg-[#050810]/98 backdrop-blur-3xl hidden p-12">
+        <div class="max-w-3xl mx-auto pt-10">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-4xl font-black italic uppercase">Global Ranks</h2>
+                <button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full"><i data-lucide="x"></i></button>
+            </div>
+            <div id="leader-list" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <div id="practice-overlay" class="overlay fixed inset-0 z-[2000] bg-[#050810]/98 backdrop-blur-3xl hidden p-12 overflow-y-auto">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-4xl font-black italic uppercase">Neural <span class="text-blue-500">Practice</span></h2>
+                <button onclick="closeOverlays()" class="p-2 bg-white/10 rounded-full"><i data-lucide="x"></i></button>
+            </div>
+            <div id="quiz-root"></div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

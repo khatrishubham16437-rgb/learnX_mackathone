@@ -106,3 +106,20 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #050810; margin
     background: #2563eb;
     box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
 }
+
+.quiz-option-btn {
+    width: 100%; text-align: left; padding: 15px 25px; 
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+    border-radius: 15px; transition: 0.3s; color: white;
+}
+.quiz-option-btn:hover { border-color: #3b82f6; background: rgba(59,130,246,0.1); }
+.sidebar { transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
+.overlay { opacity: 0; transition: opacity 0.4s ease; }
+.quiz-opt-btn { 
+    width: 100%; text-align: left; padding: 20px; 
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+    border-radius: 20px; transition: 0.3s; color: white; font-weight: 600;
+}
+.quiz-opt-btn:hover { border-color: #3b82f6; background: rgba(59,130,246,0.1); }
+.q-opt { width: 100%; text-align: left; padding: 22px 28px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; transition: 0.3s; color: white; font-weight: 700; }
+.q-opt:hover { border-color: #3b82f6; background: rgba(59,130,246,0.1); }
