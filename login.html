@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join LearnX | Adaptive AI Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        .light-wrapper { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+        .light-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.45; animation: orbFloat 25s infinite alternate ease-in-out; }
+        .orb-blue { width: 500px; height: 500px; background: #3b82f6; top: -10%; left: 5%; }
+        .orb-purple { width: 450px; height: 450px; background: #a855f7; bottom: 5%; right: -5%; }
+        .orb-cyan { width: 350px; height: 350px; background: #06b6d4; top: 40%; left: 20%; }
+        @keyframes orbFloat { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(120px, 60px) scale(1.15); } }
+        .glass-card { background: rgba(22, 29, 47, 0.75); backdrop-filter: blur(25px); }
+        .input-glow { width: 100%; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.25rem; padding: 1.15rem 1.5rem; color: white; outline: none; transition: 0.3s; }
+        .input-glow:focus { border-color: #3b82f6; box-shadow: 0 0 25px rgba(59, 130, 246, 0.2); }
+        .submit-glow-btn { width: 100%; background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; font-weight: 800; padding: 1.3rem; border-radius: 1.25rem; display: flex; align-items: center; justify-content: center; gap: 0.8rem; transition: 0.4s; }
+    </style>
+</head>
+<body class="bg-[#0b1120] min-h-screen flex items-center justify-center p-6 overflow-hidden font-['Inter']">
+    <div class="light-wrapper">
+        <div class="light-orb orb-blue"></div>
+        <div class="light-orb orb-purple"></div>
+        <div class="light-orb orb-cyan"></div>
+    </div>
+
+    <div class="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center z-10">
+        <div class="bg-white p-12 md:p-16 rounded-[3rem] shadow-2xl space-y-10 border border-white/20">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-[#1e293b] rounded-2xl flex items-center justify-center shadow-lg"><span class="text-white font-black text-2xl">X</span></div>
+                <h1 class="text-3xl font-bold text-[#3b82f6]">LearnX</h1>
+            </div>
+            <h2 class="text-5xl font-black text-[#1e293b] leading-[1.1]">Master coding,<br><span class="text-[#3b82f6]">personalized by AI.</span></h2>
+        </div>
+
+        <div class="glass-card rounded-[3.5rem] p-10 md:p-16 border border-white/10 shadow-2xl">
+            <h3 class="text-3xl font-extrabold text-white mb-6">Create Account</h3>
+            <form id="registerForm" class="space-y-6">
+                <input type="text" id="userName" placeholder="Full Name" class="input-glow" required>
+                <input type="email" placeholder="Email Address" class="input-glow" required>
+                <input type="password" placeholder="Password" class="input-glow" required>
+                <button type="submit" class="submit-glow-btn">Start Learning Now <i data-lucide="arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const name = document.getElementById('userName').value;
+            
+            // Name ko save kar lete hain taaki dashboard pe dikha sakein
+            localStorage.setItem('learnx_user', name);
+            
+            btn.disabled = true;
+            btn.innerHTML = `<span class="animate-spin inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full mr-2"></span> Personalizing...`;
+            
+            // Redirecting to dashboard.html (Dost ki main file)
+            setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+        });
+    </script>
+</body>
+</html>

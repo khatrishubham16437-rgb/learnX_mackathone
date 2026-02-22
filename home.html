@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnX | Neural Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#050810] text-white overflow-x-hidden">
+
+    <div id="intro-overlay">
+        <canvas id="starfield"></canvas>
+        <div class="relative z-50 flex flex-col items-center justify-center">
+            <div class="intro-lx text-blue-600 font-black">LX</div>
+            <p id="welcome-msg" class="opacity-0">WELCOME TO CODING WORLD</p>
+        </div>
+    </div>
+
+    <aside id="sidebar" class="sidebar">
+        <div onclick="openProfile('User', '0', '0')" id="user-avatar" class="profile-trigger mb-10 uppercase text-xs font-black">UN</div>
+        <nav class="flex flex-col gap-10 items-center">
+            <div class="nav-icon active" onclick="closeOverlays()"><i data-lucide="home"></i><span class="nav-label">Home</span></div>
+            <div class="nav-icon" onclick="triggerPractice()"><i data-lucide="code-2"></i><span class="nav-label">Practice</span></div>
+            <div class="nav-icon" onclick="openMentors()"><i data-lucide="users-round"></i><span class="nav-label">Mentors</span></div>
+            <div class="nav-icon" onclick="openLeaderboard()"><i data-lucide="trophy"></i><span class="nav-label">Ranks</span></div>
+        </nav>
+    </aside>
+
+    <main id="main-content">
+        <section id="hero" class="h-screen flex items-center px-12 lg:px-24">
+            <div class="grid lg:grid-cols-2 w-full items-center">
+                <div class="hero-text">
+                    <h1 class="text-[120px] font-black italic tracking-tighter leading-none text-blue-600">LEARNX</h1>
+                    <p class="text-gray-400 max-w-sm text-lg border-l-2 border-blue-500 pl-4 mt-6">Neural-link your logic to world-class mentors and AI-powered challenges.</p>
+                </div>
+                <div class="hidden lg:flex justify-center relative">
+                    <div class="robot-glow"></div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" class="robot-float w-[400px] z-10">
+                </div>
+            </div>
+        </section>
+        </main>
+
+    <div id="practice-overlay" class="overlay">
+        <div class="max-w-4xl mx-auto pt-10">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-4xl font-black italic uppercase italic tracking-widest">Neural <span class="text-blue-500">Practice</span></h2>
+                <button onclick="closeOverlays()" class="close-btn p-2 bg-white/10 rounded-full"><i data-lucide="x"></i></button>
+            </div>
+            <div id="quiz-root" class="w-full"></div>
+        </div>
+    </div>
+
+    <div id="profile-overlay" class="overlay">...</div>
+    <div id="mentor-overlay" class="overlay">...</div>
+    <div id="leaderboard-overlay" class="overlay">...</div>
+
+    <div id="chat-window" class="chat-container">...</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

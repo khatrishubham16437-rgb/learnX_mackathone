@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
+
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: #050810; margin: 0; }
+
+/* 🚀 CENTERED HYPERSPACE */
+#intro-overlay { position: fixed; inset: 0; z-index: 9999; background: black; display: flex; align-items: center; justify-content: center; }
+#starfield { position: absolute; inset: 0; }
+.intro-lx { font-size: 10rem; font-weight: 900; opacity: 0; transform: scale(0.5); z-index: 10; text-shadow: 0 0 50px rgba(59,130,246,0.6); }
+#welcome-msg { letter-spacing: 8px; font-weight: 800; font-size: 0.8rem; margin-top: 20px; text-transform: uppercase; z-index: 10; position: relative; }
+
+/* 🛠️ SIDEBAR */
+.sidebar { position: fixed; left: 0; top: 0; height: 100vh; width: 85px; background: rgba(11, 17, 32, 0.95); border-right: 1px solid rgba(255,255,255,0.1); z-index: 1000; display: flex; flex-direction: column; align-items: center; padding-top: 2rem; transform: translateX(-100%); }
+.profile-trigger { width: 52px; height: 52px; background: linear-gradient(135deg, #3b82f6, #9333ea); border-radius: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 800; box-shadow: 0 0 20px rgba(59,130,246,0.3); }
+.nav-icon { color: #475569; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.3s; }
+.nav-icon:hover { color: #3b82f6; transform: translateX(5px); }
+.nav-label { font-size: 8px; font-weight: 800; text-transform: uppercase; }
+
+/* 🔥 STREAK GLOW */
+.streak-glow { border: 2px solid #f97316 !important; box-shadow: 0 0 30px rgba(249,115,22,0.3); animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+
+/* 💎 PANELS & MODALS */
+#main-content { padding-left: 85px; }
+.overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(5, 8, 16, 0.98); backdrop-filter: blur(40px); display: none; padding: 4rem; overflow-y: auto; }
+.glass-panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; transition: 0.3s; }
+.close-btn { background: rgba(255,255,255,0.1); padding: 0.5rem; border-radius: 50%; border: none; color: white; cursor: pointer; }
+
+/* 🧠 NEURAL QUIZ UI (Aapka Section) */
+.quiz-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 32px;
+    padding: 3rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.quiz-option-btn {
+    width: 100%;
+    text-align: left;
+    padding: 1.25rem 2rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    color: #cbd5e1;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.quiz-option-btn:hover:not(:disabled) {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: #3b82f6;
+    color: white;
+    transform: translateX(8px);
+}
+
+.quiz-option-btn.selected {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+}
+
+.quiz-option-btn.correct {
+    background: rgba(34, 197, 94, 0.2) !important;
+    border-color: #22c55e !important;
+    color: #4ade80 !important;
+}
+
+.quiz-option-btn.wrong {
+    background: rgba(239, 68, 68, 0.2) !important;
+    border-color: #ef4444 !important;
+    color: #f87171 !important;
+}
+
+.explanation-box {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(59, 130, 246, 0.05);
+    border-left: 4px solid #3b82f6;
+    border-radius: 12px;
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.next-challenge-btn {
+    width: 100%;
+    margin-top: 2rem;
+    padding: 1.25rem;
+    background: #3b82f6;
+    color: white;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.next-challenge-btn:hover {
+    background: #2563eb;
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+}
