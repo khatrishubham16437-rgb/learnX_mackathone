@@ -1,0 +1,28 @@
+#root { display: flex; align-items: center; justify-content: center; min-height: 100vh; width: 100vw; background: #fff; margin: 0; }
+.App { width: 100%; max-width: 800px; padding: 20px; color: #1e293b; }
+.nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.2rem; }
+.logo-box { background: #3b82f6; color: #fff; padding: 4px 10px; border-radius: 6px; }
+.stats-container { display: flex; gap: 8px; align-items: center; }
+.stat-pill { background: #f1f5f9; padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; white-space: nowrap; }
+.blue { color: #3b82f6; } .orange { color: #f97316; border: 1px solid #f9731633; }
+.level-nav { display: flex; align-items: center; gap: 5px; }
+.level-nav button { border: none; background: #f1f5f9; cursor: pointer; border-radius: 50%; width: 22px; height: 22px; font-size: 10px; }
+
+.progress-bar { height: 8px; background: #e2e8f0; border-radius: 10px; margin: 10px 0 40px; overflow: hidden; }
+.progress-fill { height: 100%; background: #1e293b; transition: width 0.5s; }
+
+.challenge-card { border-left: 5px solid #3b82f6; padding-left: 30px; position: relative; min-height: 320px; }
+.question-text { font-size: 1.8rem; font-weight: 700; margin-bottom: 30px; }
+.options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.option-btn { padding: 18px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-align: left; font-weight: 600; cursor: pointer; color: #1e293b; transition: 0.2s; }
+.option-btn.selected { border-color: #3b82f6; background: #eff6ff; }
+.option-btn.correct { background: #22c55e !important; color: #fff !important; }
+.option-btn.wrong { background: #ef4444 !important; color: #fff !important; }
+
+.explanation-container { margin-top: 30px; padding: 20px; background: #f1f5f9; border-radius: 12px; border-left: 5px solid #3b82f6; }
+.explanation-tag { font-size: 0.7rem; font-weight: 800; color: #3b82f6; margin-bottom: 8px; }
+.explanation-text { font-size: 0.95rem; line-height: 1.6; color: #334155; }
+
+.card-footer { display: flex; justify-content: space-between; margin-top: 40px; }
+.submit-btn { background: #3b82f6; color: #fff; padding: 14px 34px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; }
